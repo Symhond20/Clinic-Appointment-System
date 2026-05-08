@@ -22,7 +22,8 @@ if(isset($_POST['submit'])){
         // Password verification
         if ($result && password_verify($password, $result['password'])) {
             $_SESSION["user_id"] = $result["id"];
-            header("LOcation: /Clinic Sys/index.php");
+            // This will access the index.php file, para ma determine which page yung dapat gamitin.
+            header("Location: /Clinic Sys/index.php");
             exit;
         }
         $error = "Invalid username or password";
@@ -41,113 +42,124 @@ if(isset($_POST['submit'])){
             *{
                 margin: 0;
                 padding: 0;
-            }
-            body{
-                background: #f4f7fb;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                min-height: 100vh;
-                color: #333;
-            }
-            .container{
-                margin: 0 15px;
-            }
-            .form-box{
-                width: 450px;
-                max-width: 500px;
-                background: #fff;
-                box-shadow: 0 20px 35px rgba(0,0,0,0.1);
-                border-radius: 8px;
-                padding: 30px;
-            } 
-            h2{
-                font-family: 'Poppins', sans-serif;
-                font-size: 40px;
-                text-align: center;
-                margin-bottom: 25px;
-            }
-            p{
-                font-size: 14px;
-                text-align: center;
-                margin-bottom: 10px 0;
-                font-family: 'Poppins', sans-serif;
-            }
-            p a{
-                color: #7494ec;
+                box-sizing: border-box;
+                font-family: "Poppins", sans-serif;
                 text-decoration: none;
             }
-            p a:hover{
+            body {
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+                background: #e8e8e8;
+            }
+            .container {
+                position: relative;
+                max-width: 700px;
+                width: 100%;
+                background: #fff;
+                padding: 25px;
+                border-radius: 8px;
+                box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            }
+            .container h2 {
+                font-size: 1.5rem;
+                color: #333;
+                font-weight: 500;
+                text-align: center;
+            }
+            .container p {
+                text-align: center;
+                font-size: 0.95rem;
+                color: #555;
+            }
+            .container p a:hover {
                 text-decoration: underline;
             }
-            label{
-                display: block;
-                margin-top: 15px;
-                font-family: 'Poppins', sans-serif;
-                font-weight: 600;   
+            .container .login-form {
+                margin-top: 30px;
             }
-            input, select{
+            .login-form .input-box {
                 width: 100%;
-                padding: 10px;
-                margin-top: 10px;
-                border: 1px solid #c4c8d5;
-                border-radius: 5px;
-                box-sizing: border-box;
+                margin-top: 20px;
             }
-            button{
+            .login-form :where(.input-box input) {
+                position: relative;
+                height: 50px;
                 width: 100%;
-                padding: 12px;
-                font-size: 15px;
+                outline: none;
+                font-size: 1rem;
+                color: #707070;
+                margin-top: 8px;
+                border: 1px solid #ddd;
+                border-radius: 6px;
+                padding: 0 15px;
+            }
+            .login-form button {
+                height: 55px;
+                width: 100%;
                 color: #fff;
-                font-weight: 550;
+                font-size: 16px;
+                font-weight: 400;
+                margin: 30px 0;
                 border: none;
-                border-radius: 10px; 
-                background: #3871c1;
-                transition: 0.3s;
-                margin: 20px 0;
+                border-radius: 5px;
+                background: #1a73e8;
+                transition: all 0.2s ease;
             }
-            button:hover{
-                background: #00adef; 
+            .login-form button:hover {
+                background: #00adef;
+                cursor: pointer;
             }
-
-            .error-box{
+            .error-box {
                 background: #ffe9e9;
                 color: #8b0000;
                 font-size: 17px;
+                font-family: 'Poppins', sans-serif;
                 text-align: center;
                 padding: 10px 14px;
                 border-radius: 4px;
-                margin-bottom: 14px
+                margin-bottom: 14px;
+            }
+        
+            @media screen and (max-width: 500px) {
+                .register-form .column {
+                    flex-wrap: wrap;
+                }
+                .form :where(.gender-option, .gender) {
+                    row-gap: 15px;
+                }
             }
         </style>
 
     </head>
 <body>
     <div class="container">
-        <!-- For the Login Form -->
-        <div class="form-box active" id="login-form">
+            <h2> Login Form </h2>
 
-            <form action="" method="post"> 
-                <h2> Login </h2>
+            <form action="" method="post" class="login-form">
 
                 <?php if ($error) { ?>
                     <div class="error-box"> <?= htmlspecialchars($error); ?> </div>
                 <?php } ?>
 
-                <label> Username </label>
-                <input type="text" name="username" required>
+                <div class="user-pass">
+                    
+                    <div class="input-box">
+                        <label> Username </label>
+                        <input type="text" name="username" placeholder="Enter username" required />
+                    </div>
+                    <div class="input-box">
+                        <label> Password </label>
+                        <input type="password" name="password" placeholder="Enter password" required />
+                    </div>
+                </div>
 
-                <label> Password </label>
-                <input type="password" name="password" required>
-
-                <button type="submit" name="submit" class="login"> Login </button>
-
-                <hr style="margin: 27px 0; border: none; border-top: 1px solid #ddd;">
-                <p> Don't have an account? <a href="register.php"> Register </a></p>
-
-            </form> 
+                <button type="submit" name="submit"> Login </button>
+                <p> Don't have an account? <a href="register.php"> Resgister as a Patient </a></p>
+            </form>
         </div>
-    </div>    
 
 </body>
 </html>

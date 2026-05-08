@@ -139,8 +139,7 @@ if (isset($_GET["edit"])) {
     </div>
 
     <div class="card">
-        <h3> Doctor List </h3>
-
+        <h3> Medical Staff (Doctors) </h3>
         <table>
             <tr>
                 <th> ID </th>

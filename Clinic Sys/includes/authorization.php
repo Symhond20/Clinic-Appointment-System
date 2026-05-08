@@ -47,4 +47,20 @@ function required_role($role) {
         exit;
     }
 }
-?>
+
+function patient_profile($user_id) {
+    global $conn;
+
+    if (empty($_SESSION["user_id"])) {
+        return null;
+    }
+
+    $userId = $_SESSION["user_id"];
+    $query = mysqli_query($conn, "SELECT * FROM patients WHERE user_id = $userId");
+
+    if ($query && mysqli_num_rows($query) > 0) {
+        $result = mysqli_fetch_assoc($query);
+        return $result;
+    }
+    return null;
+}

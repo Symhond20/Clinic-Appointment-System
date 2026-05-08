@@ -5,50 +5,51 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title> Appoinments Page </title>
     </head>
-
 <body>
     <?php include __DIR__ . '/../includes/header.php'?> 
+
     <div class="card">
         <h2> Appointments </h2>
-
-        <form action="" method="post" style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px; background-color: #f9f9f9;">
-            <h3> Filter By </h3>
-            
-            <div style="display: flex; gap: 20px; align-items: center;">
-                <label> Doctor </label>
-                <select name="doctor_id" required>
-                    <option value=""> All Doctors </option>
-                </select>
-
-                <label> Specialization </label>
-                <select name="specialization" required>
-                    <option value=""> All Specialization </option>
-                </select>
-
-                <label> Status </label>
-                <select name="status" required>
-                    <option value=""> All Statuses </option>
-                </select>
-                
-            </div>
-       
-            <button type="submit"> Apply Filters </button>
-   
-        </form>
-    </div>
-
-    <div class="card">
-        <h3> Doctor List </h3>
-
         <table>
             <tr>
-                <th> ID </th>
-                <th> Name </th>
-                <th> Specialization </th>
-                <th> Contact </th>
-                <th> Address </th>
+                <th> Date/Time </th>
+                <th> Patient </th>
+                <th> Doctor </th>
+                <th> Reason </th>
+                <th> Status </th>
                 <th> Actions </th>
             </tr>
+            <?php 
+            // To get every column in every row to display to the table
+                $sql = "SELECT 
+                            a.appointment_date,
+                            a.appointment_time,
+                            p.full_name AS patient_name,
+                            d.full_name AS doctor_name,
+                            a.notes AS reason,
+                            a.status
+                        FROM appointments a
+                        JOIN patients p ON a.patient_id = p.id
+                        JOIN doctors d ON a.doctor_id = d.id
+                        ORDER BY a.appointment_date, a.appointment_time";
+                $result = mysqli_query($conn, $sql);
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $specializations
+            ?>
+                <tr>
+                    <td> <?= date("F j, Y", strtotime($row["appointment_date"])) ?> <br> <?= date("g:i A", strtotime($row["appointment_time"])) ?></td>
+                    <td> <?php echo $row["patient_name"] ?> </td>
+                    <td> <?php echo $row["doctor_name"] ?> </td>
+                    <td> <?php echo $row["reason"] ?> </td>
+                    <td> <?php echo $row["status"] ?> </td>
+
+                    <td> 
+                        <div class="actions">
+                            
+                        </div>
+                    </td>
+                </tr>
+            <?php } ?>
         </table>
     </div>
 </body>

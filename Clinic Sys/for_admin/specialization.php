@@ -25,7 +25,7 @@ if (isset($_POST["submit"])) {
             }
         }
         else {
-         // For insering 
+         // For inserting 
             $duplicate = mysqli_query($conn, "SELECT * FROM specializations WHERE name = '$name'");
             if (mysqli_num_rows($duplicate) > 0) {
                 $error = "Specialization already exits.";
@@ -78,7 +78,7 @@ if (isset($_GET["edit"])) {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title> Specializations Management </title>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=close_small" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=close" />
     </head>
 <body>
     <?php include __DIR__ . '/../includes/header.php'?> 
@@ -114,6 +114,7 @@ if (isset($_GET["edit"])) {
             <tr>
                 <th> ID </th>
                 <th> Name </th>
+                <th> Doctor </th>
                 <th> Actions </th>
             </tr>
 
@@ -121,12 +122,18 @@ if (isset($_GET["edit"])) {
             // To get every column in every row to display to the table
                 $sql = "SELECT * FROM specializations ORDER BY name";
                 $result = mysqli_query($conn, $sql);
-                while ($row = mysqli_fetch_assoc($result)) {
-                    $specializations
+                $count_sql ="SELECT s.id, s.name, COUNT(d.id) AS doctor_count 
+                            FROM specializations s
+                            LEFT JOIN doctors d ON s.id = d.specialization_id 
+                            GROUP BY s.id, s.name 
+                            ORDER BY s.name";
+                $result = mysqli_query($conn, $count_sql);
+                while ($row = mysqli_fetch_assoc($result)) {           
             ?>
                 <tr>
                     <td> <?php echo $row["id"] ?> </td>
                     <td> <?php echo $row["name"] ?> </td>
+                    <td><?php echo $row["doctor_count"]; ?> </td>
                     <td> 
                         <div class="actions">
                             <!--edit-->
