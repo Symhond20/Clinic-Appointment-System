@@ -26,12 +26,12 @@ if ($conn->connect_error){
                 role ENUM('admin','patient') NOT NULL DEFAULT 'patient',
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )";
-//  if (mysqli_query($conn, $sql)) {
-//       echo "Table users was successfully created!";
-//    } 
-//    else {
-//        echo "Error creating table: " . mysqli_error($conn);
-//    }
+    //if (mysqli_query($conn, $sql)) {
+    //   echo "Table users was successfully created!";
+    //} 
+    //else {
+    //    echo "Error creating table: " . mysqli_error($conn);
+    //}
     $sql = "CREATE TABLE IF NOT EXISTS patients (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 user_id INT NOT NULL,
@@ -49,12 +49,39 @@ if ($conn->connect_error){
                 FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
             )";
          
-//    if (mysqli_query($conn, $sql)) {
-//       echo "Table patients was successfully created!";
-//    } 
-//    else {
-//        echo "Error creating table: " . mysqli_error($conn);
-//    }
+    //if (mysqli_query($conn, $sql)) {
+    //   echo "Table patients was successfully created!";
+    //} 
+    //else {
+    //    echo "Error creating table: " . mysqli_error($conn);
+    //}
+
+    $sql = "CREATE TABLE IF NOT EXISTS specializations (
+                id INT AUTO_INCREMENT PRIMARY KEY, 
+                name VARCHAR(150) NOT NULL UNIQUE, 
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )";
+    //if (mysqli_query($conn, $sql)) {
+    //    echo "Table specializations was successfully created!";
+    //} 
+    //else {
+    //     echo "Error creating table: " . mysqli_error($conn);
+    //} 
+    $sql = "CREATE TABLE IF NOT EXISTS doctors (
+                id INT AUTO_INCREMENT PRIMARY KEY, 
+                full_name VARCHAR(150) NOT NULL UNIQUE, 
+                specialization_id INT NULL,
+                contact_number VARCHAR(150),
+                full_address VARCHAR(150),
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (specialization_id) REFERENCES specializations(id) ON DELETE SET NULL
+            )";
+    //if (mysqli_query($conn, $sql)) {
+    //    echo "Table doctors was successfully created!";
+    //} 
+    //else {
+    //     echo "Error creating table: " . mysqli_error($conn);
+    //}
 
     $sql = "CREATE TABLE IF NOT EXISTS appointments (
                 id INT AUTO_INCREMENT PRIMARY KEY, 
@@ -69,38 +96,12 @@ if ($conn->connect_error){
                 FOREIGN KEY (patient_id) REFERENCES patients(id) ON DELETE CASCADE,
                 FOREIGN KEY (doctor_id) REFERENCES doctors(id) ON DELETE CASCADE
             )";
-    // if (mysqli_query($conn, $sql)) {
+    //if (mysqli_query($conn, $sql)) {
     //    echo "Table appointments was successfully created!";
-    // } 
-    // else {
+    //} 
+    //else {
     //     echo "Error creating table: " . mysqli_error($conn);
-    // }
-    $sql = "CREATE TABLE IF NOT EXISTS specializations (
-                id INT AUTO_INCREMENT PRIMARY KEY, 
-                name VARCHAR(150) NOT NULL UNIQUE, 
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )";
-    // if (mysqli_query($conn, $sql)) {
-    //    echo "Table specializations was successfully created!";
-    // } 
-    // else {
-    //     echo "Error creating table: " . mysqli_error($conn);
-    // } 
-    $sql = "CREATE TABLE IF NOT EXISTS doctors (
-                id INT AUTO_INCREMENT PRIMARY KEY, 
-                full_name VARCHAR(150) NOT NULL UNIQUE, 
-                specialization_id INT NULL,
-                contact_number VARCHAR(150),
-                full_address VARCHAR(150),
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (specialization_id) REFERENCES specializations(id) ON DELETE SET NULL
-            )";
-    // if (mysqli_query($conn, $sql)) {
-    //    echo "Table doctors was successfully created!";
-    // } 
-    // else {
-    //     echo "Error creating table: " . mysqli_error($conn);
-    // }
+    //}
     $sql = "CREATE TABLE IF NOT EXISTS consultation_records (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 appointment_id INT NOT NULL,
@@ -116,17 +117,17 @@ if ($conn->connect_error){
                 FOREIGN KEY (doctor_id) REFERENCES doctors(id) ON DELETE CASCADE,
                 FOREIGN KEY (patient_id) REFERENCES patients(id) ON DELETE CASCADE
             )";
-    // if (mysqli_query($conn, $sql)) {
+    //if (mysqli_query($conn, $sql)) {
     //    echo "Table consultation_records was successfully created!";
-    // } 
-    // else {
+    //} 
+    //else {
     //     echo "Error creating table: " . mysqli_error($conn);
-    // }
+    //}
 
     // This one is  for crating default admin remove all the "//" below so it will execute the insertion.
-    $sql = "INSERT INTO users (username, password, role) VALUES 
-                ('admin', '" . password_hash("admin123", PASSWORD_DEFAULT) . "', 'admin')
-                ";
+    //$sql = "INSERT INTO users (username, password, role) VALUES 
+    //            ('admin', '" . password_hash("admin123", PASSWORD_DEFAULT) . "', 'admin')
+    //            ";
     //    if (mysqli_query($conn, $sql)) {
     //        echo "Admin user was successfully created!";
     //    } 
