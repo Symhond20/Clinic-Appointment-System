@@ -46,8 +46,8 @@ $user = current_user();
                         <a href="/Clinic Sys/for_admin/report.php">Reports</a>
                     <?php } else { ?>
                         <a href="/Clinic Sys/for_patient/user_dash.php"> Dashboard </a>
-                        <a href="/Clinic Sys/for_patient/patient_history.php"> Booking Appointment </a>
-                        <a href="/Clinic Sys/for_patient/booking.php"> Patient History </a>
+                        <a href="/Clinic Sys/for_patient/booking.php"> Booking Appointment </a>
+                        <a href="/Clinic Sys/for_patient/patient_history.php"> Patient History </a>
                     <?php } ?>
                         <a href="/Clinic Sys/logout.php"> Logout </a>
                 </nav>
